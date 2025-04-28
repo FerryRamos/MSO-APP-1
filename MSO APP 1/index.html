@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>MSO Organization</title>
+<style>
+html {
+    scroll-behavior: smooth;
+}
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f0fff0;
+    color: #333;
+}
+header {
+    background-color: #2e8b57;
+    color: #fff;
+    padding: 20px 20px 20px 80px;
+    text-align: center;
+    text-shadow: 2px 2px 4px #000;
+    position: relative;
+}
+#logoContainer {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    cursor: pointer;
+}
+#logoImage {
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 2px solid #fff;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+}
+#uploadLogo {
+    display: none;
+}
+nav {
+    background-color: #276749;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+nav ul {
+    list-style: none;
+    padding: 10px;
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+}
+nav ul li a {
+    color: #fff;
+    text-decoration: none;
+    padding: 10px 20px;
+    border-radius: 30px;
+    font-weight: bold;
+    position: relative;
+    text-shadow: 1px 1px 3px #000;
+    transition: 0.3s ease;
+}
+nav ul li a::after {
+    content: "";
+    position: absolute;
+    width: 0;
+    height: 3px;
+    background-color: #38a169;
+    left: 50%;
+    bottom: -5px;
+    transform: translateX(-50%);
+    transition: all 0.3s ease;
+}
+nav ul li a:hover::after,
+nav ul li a.active::after {
+    width: 100%;
+}
+section {
+    padding: 40px 20px;
+    max-width: 1000px;
+    margin: 20px auto;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+h2 {
+    color: #2e8b57;
+    text-shadow: 1px 1px 2px #aaa;
+}
+form {
+    display: flex;
+    flex-direction: column;
+}
+form input, form textarea {
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+}
+form input[type="submit"] {
+    background-color: #2e8b57;
+    color: #fff;
+    cursor: pointer;
+    border: none;
+    transition: background-color 0.3s;
+}
+form input[type="submit"]:hover {
+    background-color: #38a169;
+}
+footer {
+    text-align: center;
+    padding: 20px;
+    background-color: #276749;
+    color: #fff;
+}
+.records table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+.records th, .records td {
+    padding: 10px;
+    border: 1px solid #ccc;
+}
+.records th {
+    background-color: #d0f0d0;
+}
+.records td a {
+    color: #2e8b57;
+    text-decoration: underline;
+    cursor: pointer;
+}
+</style>
+</head>
+<body>
+<header>
+<div id="logoContainer" onclick="document.getElementById('uploadLogo').click()">
+    <img id="logoImage" src="14e19b32-76c7-4dab-81e7-01d75d3ce8ea.jpg" alt="Logo">
+    <input type="file" id="uploadLogo" accept="image/*" onchange="uploadNewLogo(event)">
+</div>
+<h1> (MSO) Muslim Student Organization</h1>
+</header>
+
+<nav>
+<ul>
+    <li><a href="#home">Home</a></li>
+    <li><a href="#membership">Membership</a></li>
+    <li><a href="#donate">Donate</a></li>
+    <li><a href="#officers">Officers</a></li>
+    <li><a href="#contact">Contact</a></li>
+    <li><a href="#records">Records</a></li>
+</ul>
+</nav>
+
+<section id="home">
+<h2>About MSO</h2>
+<p>The <strong>SKSU Muslim Student Organization (MSO)</strong> is dedicated to fostering unity, leadership, and spiritual growth among Muslim students. 
+Our mission is to promote Islamic values, organize beneficial events, and build a supportive community within the campus and beyond.</p>
+<p>We conduct religious, educational, and charitable programs while encouraging inclusiveness, mutual respect, and active student engagement.</p>
+</section>
+
+<section id="membership">
+<h2>Join Us</h2>
+<form onsubmit="saveMembership(event)">
+    <input type="text" id="memberName" placeholder="Your Name" required />
+    <input type="email" id="memberEmail" placeholder="Your Email" required />
+    <input type="submit" value="Register" />
+</form>
+</section>
+
+<section id="donate">
+<h2>Donate</h2>
+<form onsubmit="saveDonation(event)">
+    <input type="text" id="donorName" placeholder="Your Name" required />
+    <input type="number" id="donationAmount" placeholder="Amount" required />
+    <input type="submit" value="Donate" />
+</form>
+</section>
+
+<section id="officers">
+<h2>Add Officer</h2>
+<form onsubmit="saveOfficer(event)">
+    <input type="text" id="officerName" placeholder="Officer Name" required />
+    <input type="text" id="officerPosition" placeholder="Position" required />
+    <input type="email" id="officerEmail" placeholder="Email" required />
+    <input type="submit" value="Add Officer" />
+</form>
+</section>
+
+<section id="contact">
+<h2>Contact Us</h2>
+<form onsubmit="saveContact(event)">
+    <input type="text" id="contactName" placeholder="Your Name" required />
+    <input type="email" id="contactEmail" placeholder="Your Email" required />
+    <textarea id="contactMessage" placeholder="Your Message" required></textarea>
+    <input type="submit" value="Send Message" />
+</form>
+</section>
+
+<section id="records">
+<h2>Records</h2>
+<input type="text" id="searchInput" onkeyup="searchRecords()" placeholder="Search records..." style="width: 100%; padding: 10px; margin-bottom: 20px; border-radius: 5px; border: 1px solid #ccc;" />
+<div class="records">
+    <h3>Members</h3>
+    <table id="memberTable"><tr><th>Name</th><th>Email</th></tr></table>
+
+    <h3>Contacts</h3>
+    <table id="contactTable"><tr><th>Name</th><th>Email</th><th>Message</th></tr></table>
+
+    <h3>Donations</h3>
+    <table id="donationTable"><tr><th>Name</th><th>Amount</th></tr></table>
+
+    <h3>Officers</h3>
+    <table id="officerTable"><tr><th>Name</th><th>Position</th><th>Email</th></tr></table>
+</div>
+</section>
+
+<footer>
+<p>&copy; 2025-2026 MSO Organization. All rights reserved.</p>
+</footer>
+
+<script>
+function uploadNewLogo(event) {
+    const file = event.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = function(e) {
+    const imgSrc = e.target.result;
+    document.getElementById("logoImage").src = imgSrc;
+    localStorage.setItem("customLogo", imgSrc);
+    };
+    reader.readAsDataURL(file);
+}
+
+function loadLogo() {
+    const savedLogo = localStorage.getItem("customLogo");
+    if (savedLogo) {
+    document.getElementById("logoImage").src = savedLogo;
+    }
+}
+
+function saveMembership(e) {
+    e.preventDefault();
+    const name = document.getElementById("memberName").value;
+    const email = document.getElementById("memberEmail").value;
+    const members = JSON.parse(localStorage.getItem("members")) || [];
+    members.push({ name, email });
+    localStorage.setItem("members", JSON.stringify(members));
+    e.target.reset();
+    showRecords();
+}
+
+function saveDonation(e) {
+    e.preventDefault();
+    const donor = document.getElementById("donorName").value;
+    const amount = document.getElementById("donationAmount").value;
+    const donations = JSON.parse(localStorage.getItem("donations")) || [];
+    donations.push({ donor, amount });
+    localStorage.setItem("donations", JSON.stringify(donations));
+    e.target.reset();
+    showRecords();
+}
+
+function saveContact(e) {
+    e.preventDefault();
+    const name = document.getElementById("contactName").value;
+    const email = document.getElementById("contactEmail").value;
+    const message = document.getElementById("contactMessage").value;
+    const contacts = JSON.parse(localStorage.getItem("contacts")) || [];
+    contacts.push({ name, email, message });
+    localStorage.setItem("contacts", JSON.stringify(contacts));
+    e.target.reset();
+    showRecords();
+}
+
+function saveOfficer(e) {
+    e.preventDefault();
+    const name = document.getElementById("officerName").value;
+    const position = document.getElementById("officerPosition").value;
+    const email = document.getElementById("officerEmail").value;
+    const officers = JSON.parse(localStorage.getItem("officers")) || [];
+    officers.push({ name, position, email });
+    localStorage.setItem("officers", JSON.stringify(officers));
+    e.target.reset();
+    showRecords();
+}
+
+function deleteRecord(type, index) {
+    const data = JSON.parse(localStorage.getItem(type)) || [];
+    if (confirm("Are you sure you want to delete this Record?")) {
+    data.splice(index, 1);
+    localStorage.setItem(type, JSON.stringify(data));
+    showRecords();
+    }
+}
+
+function showRecords() {
+    const members = JSON.parse(localStorage.getItem("members")) || [];
+    const contacts = JSON.parse(localStorage.getItem("contacts")) || [];
+    const donations = JSON.parse(localStorage.getItem("donations")) || [];
+    const officers = JSON.parse(localStorage.getItem("officers")) || [];
+
+    document.getElementById("memberTable").innerHTML =
+    "<tr><th>Name</th><th>Email</th></tr>" +
+    members.map((m, i) => <tr><td><a onclick="deleteRecord('members', ${i})">${m.name}</a></td><td>${m.email}</td></tr>).join("");
+
+    document.getElementById("contactTable").innerHTML =
+    "<tr><th>Name</th><th>Email</th><th>Message</th></tr>" +
+    contacts.map((c, i) => <tr><td><a onclick="deleteRecord('contacts', ${i})">${c.name}</a></td><td>${c.email}</td><td>${c.message}</td></tr>).join("");
+
+    document.getElementById("donationTable").innerHTML =
+    "<tr><th>Name</th><th>Amount</th></tr>" +
+    donations.map((d, i) => <tr><td><a onclick="deleteRecord('donations', ${i})">${d.donor}</a></td><td>${d.amount}</td></tr>).join("");
+
+    document.getElementById("officerTable").innerHTML =
+    "<tr><th>Name</th><th>Position</th><th>Email</th></tr>" +
+    officers.map((o, i) => <tr><td><a onclick="deleteRecord('officers', ${i})">${o.name}</a></td><td>${o.position}</td><td>${o.email}</td></tr>).join("");
+}
+
+function searchRecords() {
+    const input = document.getElementById("searchInput").value.toLowerCase();
+    const tables = document.querySelectorAll(".records table");
+
+    tables.forEach(table => {
+    const rows = table.getElementsByTagName("tr");
+    for (let i = 1; i < rows.length; i++) {
+        const rowText = rows[i].textContent.toLowerCase();
+        rows[i].style.display = rowText.includes(input) ? "" : "none";
+    }
+    });
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+    loadLogo();
+    showRecords();
+});
+</script>
+</body>
+</html>
